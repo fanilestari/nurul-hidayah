@@ -12,6 +12,12 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+@app.get("/")
+def root():
+    return {
+        "message": "Backend Nurul Hidayah berjalan"
+    }
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
