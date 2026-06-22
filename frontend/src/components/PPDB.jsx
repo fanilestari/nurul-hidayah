@@ -1,4 +1,5 @@
 import { useState } from "react";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function PPDB() {
   const [form, setForm] = useState({
@@ -15,7 +16,7 @@ export default function PPDB() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("http://127.0.0.1:8000/ppdb", {
+    const res = await fetch(`${API_URL}/ppdb`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
