@@ -12,7 +12,7 @@ import WhatsAppButton from "./components/WhatsAppButton";
 
 import AdminDashboard from "./pages/AdminDashboard";
 import Login from "./pages/Login";
-
+import ProtectedRoute from "./routes/ProtectedRoute";
 // LANDING PAGE
 function LandingPage() {
   return (
@@ -46,7 +46,11 @@ export default function App() {
 
         <Route
           path="/admin"
-          element={isAuth ? <AdminDashboard /> : <Navigate to="/login" />}
+          element={
+            <ProtectedRoute isAuth={isAuth}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
         />
       </Routes>
     </BrowserRouter>
