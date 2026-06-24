@@ -13,6 +13,12 @@ import WhatsAppButton from "./components/WhatsAppButton";
 import AdminDashboard from "./pages/AdminDashboard";
 import Login from "./pages/Login";
 import ProtectedRoute from "./routes/ProtectedRoute";
+
+import PPDBAdmin from "./pages/PPDBAdmin";
+import ProgramAdmin from "./pages/ProgramAdmin";
+import GaleriAdmin from "./pages/GaleriAdmin";
+import PesanAdmin from "./pages/PesanAdmin";
+import SettingsAdmin from "./pages/SettingsAdmin";
 // LANDING PAGE
 function LandingPage() {
   return (
