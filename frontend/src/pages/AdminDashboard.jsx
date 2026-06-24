@@ -9,7 +9,7 @@ export default function AdminDashboard() {
 
   // FETCH DATA
   const fetchData = async () => {
-    const res = await fetch("http://127.0.0.1:8000/ppdb");
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/ppdb`);
     const result = await res.json();
     setData(result);
   };
@@ -20,7 +20,7 @@ export default function AdminDashboard() {
 
   // DELETE
   const handleDelete = async (id) => {
-    await fetch(`http://127.0.0.1:8000/ppdb/${id}`, {
+    await fetch(`${import.meta.env.VITE_API_URL}/ppdb/${id}`, {
       method: "DELETE",
     });
 
@@ -34,7 +34,7 @@ export default function AdminDashboard() {
 
   // SAVE EDIT
   const handleUpdate = async () => {
-    await fetch(`http://127.0.0.1:8000/ppdb/${editData.id}`, {
+    await fetch(`${import.meta.env.VITE_API_URL}/ppdb/${editData.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(editData),
