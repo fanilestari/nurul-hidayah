@@ -58,6 +58,46 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/admin/ppdb"
+          element={
+            <ProtectedRoute isAuth={isAuth}>
+              <PPDBAdmin />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/programs"
+          element={
+            <ProtectedRoute isAuth={isAuth}>
+              <ProgramAdmin />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/galeri"
+          element={
+            <ProtectedRoute isAuth={isAuth}>
+              <GaleriAdmin />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/pesan"
+          element={
+            <ProtectedRoute isAuth={isAuth}>
+              <PesanAdmin />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/settings"
+          element={
+            <ProtectedRoute isAuth={isAuth}>
+              <SettingsAdmin />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
