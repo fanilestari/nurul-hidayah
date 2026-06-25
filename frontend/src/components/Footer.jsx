@@ -111,7 +111,7 @@ function Footer() {
             Jawa Tengah, Indonesia
           </p>
           <a
-            href="https://maps.google.com"
+            href="https://www.google.com/maps/search/?api=1&query=Jl.+Pramuka+RT+03+RW+11,+Munggang+Bawah,+Kalibeber,+Mojotengah,+Wonosobo"
             target="_blank"
             rel="noreferrer"
             className="text-green-500 hover:underline"
