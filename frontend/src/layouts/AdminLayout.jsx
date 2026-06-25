@@ -1,16 +1,20 @@
 import Sidebar from "../components/Sidebar";
 import NavbarAdmin from "../components/NavbarAdmin";
 
-export default function AdminLayout({ children }) {
+function AdminLayout({ children }) {
   return (
-    <div className="flex">
+    <div className="min-h-screen bg-gray-100 flex">
+      {/* Sidebar */}
       <Sidebar />
 
-      <div className="flex-1 bg-gray-100">
+      {/* Content */}
+      <div className="flex-1 flex flex-col">
         <NavbarAdmin />
 
-        <div className="p-6">{children}</div>
+        <main className="p-6">{children}</main>
       </div>
     </div>
   );
 }
+
+export default AdminLayout;
