@@ -26,7 +26,6 @@ function LandingPage() {
         <Programs />
         <Gallery />
         <PPDB />
-        <Contact />
       </div>
 
       <WhatsAppButton />

@@ -110,12 +110,15 @@ function Footer() {
             <br />
             Jawa Tengah, Indonesia
           </p>
+          <a
+            href="https://maps.google.com"
+            target="_blank"
+            rel="noreferrer"
+            className="text-green-500 hover:underline"
+          >
+            Lihat di Google Maps →
+          </a>
         </div>
-        <iframe
-          src="https://maps.google.com/maps?q=Wonosobo&t=&z=15&ie=UTF8&iwloc=&output=embed"
-          className="w-full h-52 rounded-2xl border-0"
-          loading="lazy"
-        ></iframe>
       </div>
 
       {/* COPYRIGHT */}
