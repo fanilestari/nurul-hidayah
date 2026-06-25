@@ -111,7 +111,7 @@ function Footer() {
             Jawa Tengah, Indonesia
           </p>
           <a
-            href="https://www.google.com/maps/search/?api=1&query=Jl.+Pramuka+RT+03+RW+11,+Munggang+Bawah,+Kalibeber,+Mojotengah,+Wonosobo"
+            href="https://www.google.com/maps/place/Pondok+Pesantren+Nurul+Hidayah/@-7.3308727,109.9026945,17z/data=!3m1!4b1!4m6!3m5!1s0x2e7aa07c2b685117:0x66980cf79a14e16d!8m2!3d-7.330878!4d109.9052694!16s%2Fg%2F11c2nybc2t?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D"
             target="_blank"
             rel="noreferrer"
             className="text-green-500 hover:underline"
