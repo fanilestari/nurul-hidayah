@@ -1,41 +1,92 @@
 import { useEffect, useState } from "react";
-import api from "../services/api";
 
-function AdminDashboard() {
-  const [stats, setStats] = useState({
-    total_santri: 0,
-    pendaftar_baru: 0,
-    pesan_masuk: 0,
-    program_aktif: 0,
+const API_URL = import.meta.env.VITE_API_URL;
+
+export default function AdminDashboard() {
+  const [dataPPDB, setDataPPDB] = useState([]);
+
+  const [form, setForm] = useState({
+    nama: "",
+    umur: "",
+    asal: "",
+    pesan: "",
   });
 
-  const [ppdb, setPpdb] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    loadDashboard();
+    getPPDB();
   }, []);
 
-  const loadDashboard = async () => {
+  const getPPDB = async () => {
     try {
-      const statsRes = await api.get("/dashboard/stats");
-
-      const ppdbRes = await api.get("/ppdb");
-
-      setStats(statsRes.data);
-      setPpdb(ppdbRes.data);
+      const res = await fetch(`${API_URL}/ppdb`);
+      const data = await res.json();
+      setDataPPDB(data);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const deleteData = async (id) => {
-    const confirmDelete = window.confirm("Yakin ingin menghapus data?");
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-    if (!confirmDelete) return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setLoading(true);
 
     try {
-      await api.delete(`/ppdb/${id}`);
-      loadDashboard();
+      const res = await fetch(`${API_URL}/ppdb`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nama: form.nama,
+          umur: Number(form.umur),
+          asal: form.asal,
+          pesan: form.pesan,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Gagal menyimpan");
+      }
+
+      setForm({
+        nama: "",
+        umur: "",
+        asal: "",
+        pesan: "",
+      });
+
+      await getPPDB();
+
+      alert("Pendaftaran berhasil");
+    } catch (err) {
+      console.log(err);
+      alert("Terjadi kesalahan");
+    }
+
+    setLoading(false);
+  };
+
+  const handleDelete = async (id) => {
+    const yakin = window.confirm("Yakin ingin menghapus data?");
+
+    if (!yakin) return;
+
+    try {
+      await fetch(`${API_URL}/ppdb/${id}`, {
+        method: "DELETE",
+      });
+
+      getPPDB();
     } catch (err) {
       console.log(err);
     }
@@ -44,130 +95,169 @@ function AdminDashboard() {
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       {/* HEADER */}
-      <div className="flex justify-between items-center mb-10">
-        <div>
-          <h1 className="text-4xl font-bold text-green-700">Dashboard Admin</h1>
+      <div className="mb-10">
+        <h1 className="text-4xl font-bold text-green-700">Dashboard Admin</h1>
 
-          <p className="text-gray-500 mt-2">Pondok Pesantren Nurul Hidayah</p>
-        </div>
-
-        <button
-          onClick={loadDashboard}
-          className="bg-green-700 text-white px-5 py-3 rounded-lg"
-        >
-          Refresh
-        </button>
+        <p className="text-gray-500 mt-2">
+          Sistem Informasi Pondok Pesantren Nurul Hidayah
+        </p>
       </div>
 
-      {/* CARD */}
-      <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-2xl shadow">
-          <p className="text-gray-500">Total Santri</p>
+      {/* CARD STATISTIK */}
+      <div className="grid md:grid-cols-4 gap-6 mb-10">
+        <div className="bg-white rounded-2xl p-6 shadow">
+          <h3 className="text-gray-500">Total Pendaftar</h3>
 
-          <h2 className="text-5xl font-bold text-green-700 mt-3">
-            {stats.total_santri}
-          </h2>
+          <p className="text-4xl font-bold text-green-700 mt-3">
+            {dataPPDB.length}
+          </p>
         </div>
 
-        <div className="bg-white p-6 rounded-2xl shadow">
-          <p className="text-gray-500">Pendaftar Baru</p>
+        <div className="bg-white rounded-2xl p-6 shadow">
+          <h3 className="text-gray-500">Pendaftar Baru</h3>
 
-          <h2 className="text-5xl font-bold text-green-700 mt-3">
-            {stats.pendaftar_baru}
-          </h2>
+          <p className="text-4xl font-bold text-blue-600 mt-3">
+            {dataPPDB.length}
+          </p>
         </div>
 
-        <div className="bg-white p-6 rounded-2xl shadow">
-          <p className="text-gray-500">Pesan Masuk</p>
+        <div className="bg-white rounded-2xl p-6 shadow">
+          <h3 className="text-gray-500">Pesan Masuk</h3>
 
-          <h2 className="text-5xl font-bold text-green-700 mt-3">
-            {stats.pesan_masuk}
-          </h2>
+          <p className="text-4xl font-bold text-orange-500 mt-3">0</p>
         </div>
 
-        <div className="bg-white p-6 rounded-2xl shadow">
-          <p className="text-gray-500">Program Aktif</p>
+        <div className="bg-white rounded-2xl p-6 shadow">
+          <h3 className="text-gray-500">Program Aktif</h3>
 
-          <h2 className="text-5xl font-bold text-green-700 mt-3">
-            {stats.program_aktif}
-          </h2>
+          <p className="text-4xl font-bold text-purple-600 mt-3">0</p>
         </div>
       </div>
 
-      {/* AKTIVITAS */}
-      <div className="bg-white rounded-2xl shadow p-6 mt-10">
-        <h2 className="text-2xl font-bold mb-6">Aktivitas Terbaru</h2>
+      {/* FORM TAMBAH */}
+      <div className="bg-white rounded-2xl shadow p-8 mb-10">
+        <h2 className="text-2xl font-bold mb-6">Tambah Pendaftar PPDB</h2>
 
-        {ppdb.length === 0 ? (
-          <p className="text-gray-500">Belum ada pendaftar.</p>
-        ) : (
-          <div className="space-y-4">
-            {ppdb
-              .slice()
-              .reverse()
-              .slice(0, 5)
-              .map((item) => (
-                <div key={item.id} className="border-b pb-3">
-                  <p className="font-semibold">{item.nama}</p>
+        <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-5">
+          <input
+            type="text"
+            name="nama"
+            value={form.nama}
+            onChange={handleChange}
+            placeholder="Nama Lengkap"
+            className="border p-3 rounded-lg"
+            required
+          />
 
-                  <p className="text-gray-500">Mendaftar dari {item.asal}</p>
-                </div>
-              ))}
-          </div>
-        )}
+          <input
+            type="number"
+            name="umur"
+            value={form.umur}
+            onChange={handleChange}
+            placeholder="Umur"
+            className="border p-3 rounded-lg"
+            required
+          />
+
+          <input
+            type="text"
+            name="asal"
+            value={form.asal}
+            onChange={handleChange}
+            placeholder="Asal"
+            className="border p-3 rounded-lg"
+            required
+          />
+
+          <input
+            type="text"
+            name="pesan"
+            value={form.pesan}
+            onChange={handleChange}
+            placeholder="Pesan"
+            className="border p-3 rounded-lg"
+            required
+          />
+
+          <button
+            disabled={loading}
+            className="
+              md:col-span-2
+              bg-green-700
+              text-white
+              py-3
+              rounded-lg
+              hover:bg-green-800
+              disabled:bg-gray-400
+            "
+          >
+            {loading ? "Menyimpan..." : "Simpan Pendaftar"}
+          </button>
+        </form>
       </div>
 
       {/* DATA PPDB */}
-      <div className="bg-white rounded-2xl shadow p-6 mt-10">
+      <div className="bg-white rounded-2xl shadow p-8">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">Data PPDB</h2>
+          <h2 className="text-2xl font-bold">Data Pendaftar</h2>
 
-          <span className="text-gray-500">Total: {ppdb.length}</span>
+          <span className="text-gray-500">Total : {dataPPDB.length}</span>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="bg-green-700 text-white">
-                <th className="p-4 text-left">Nama</th>
+        {dataPPDB.length === 0 ? (
+          <div className="text-center py-20 text-gray-400">
+            Belum ada data pendaftar
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-green-700 text-white">
+                  <th className="p-4 text-left">Nama</th>
 
-                <th className="p-4 text-left">Umur</th>
+                  <th className="p-4 text-left">Umur</th>
 
-                <th className="p-4 text-left">Asal</th>
+                  <th className="p-4 text-left">Asal</th>
 
-                <th className="p-4 text-left">Pesan</th>
+                  <th className="p-4 text-left">Pesan</th>
 
-                <th className="p-4 text-center">Aksi</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {ppdb.map((item) => (
-                <tr key={item.id} className="border-b">
-                  <td className="p-4">{item.nama}</td>
-
-                  <td className="p-4">{item.umur}</td>
-
-                  <td className="p-4">{item.asal}</td>
-
-                  <td className="p-4">{item.pesan}</td>
-
-                  <td className="p-4 text-center">
-                    <button
-                      onClick={() => deleteData(item.id)}
-                      className="bg-red-500 text-white px-4 py-2 rounded-lg"
-                    >
-                      Hapus
-                    </button>
-                  </td>
+                  <th className="p-4 text-center">Aksi</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+
+              <tbody>
+                {dataPPDB.map((item) => (
+                  <tr key={item.id} className="border-b">
+                    <td className="p-4">{item.nama}</td>
+
+                    <td className="p-4">{item.umur}</td>
+
+                    <td className="p-4">{item.asal}</td>
+
+                    <td className="p-4">{item.pesan}</td>
+
+                    <td className="p-4 text-center">
+                      <button
+                        onClick={() => handleDelete(item.id)}
+                        className="
+                          bg-red-500
+                          hover:bg-red-600
+                          text-white
+                          px-4
+                          py-2
+                          rounded-lg
+                        "
+                      >
+                        Hapus
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );
 }
-
-export default AdminDashboard;
