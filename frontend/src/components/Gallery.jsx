@@ -1,26 +1,26 @@
 const images = [
   {
-    src: "https://images.unsplash.com/photo-1588072432836-e10032774350",
-    title: "Kegiatan Ngaji Santri",
+    src: "/khataman.jpeg",
+    title: "Lailatut tasyakur",
   },
   {
-    src: "https://images.unsplash.com/photo-1604881991720-f91add269bed",
-    title: "Suasana Pondok",
+    src: "/ziarohcowo.jpeg",
+    title: "Ziaroh ",
   },
   {
-    src: "https://images.unsplash.com/photo-1606293459339-1c5f3b8c9c1f",
+    src: "/ziarohmba.jpeg",
     title: "Sholat Berjamaah",
   },
   {
-    src: "https://images.unsplash.com/photo-1523240795612-9a054b0db644",
-    title: "Kajian Kitab Kuning",
+    src: "/berdua.jpeg",
+    title: "Khataman Imrithy",
   },
   {
-    src: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b",
-    title: "Santri Belajar",
+    src: "/madin.jpeg",
+    title: "Khataman",
   },
   {
-    src: "https://images.unsplash.com/photo-1513258496099-48168024aec0",
+    src: "anak_kecil.jpeg",
     title: "Kegiatan Pondok",
   },
 ];
