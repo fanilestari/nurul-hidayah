@@ -8,7 +8,6 @@ import Programs from "./components/Programs";
 import Gallery from "./components/Gallery";
 import PPDB from "./components/PPDB";
 import Footer from "./components/Footer";
-import Contact from "./components/Contact";
 import WhatsAppButton from "./components/WhatsAppButton";
 
 import Login from "./pages/Login";
