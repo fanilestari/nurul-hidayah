@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <footer className="bg-green-900 text-white mt-20">
+    <footer className="bg-green-800 text-white mt-20">
       <div className="max-w-7xl mx-auto px-8 py-14 grid md:grid-cols-3 gap-10">
         {/* KOLOM 1 */}
         <div>
@@ -80,7 +80,7 @@ function Footer() {
             className="
               inline-block
               mt-6
-              bg-green-600
+              bg-green-800
               hover:bg-green-500
               px-6
               py-3
