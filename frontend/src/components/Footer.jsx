@@ -64,7 +64,9 @@ function Footer() {
           <h3 className="text-xl font-semibold mb-4">Kontak Kami</h3>
 
           <div className="space-y-3 text-green-100">
-            <p>📍 Desa XXXXX, Kecamatan XXXXX, Kabupaten XXXXX</p>
+            <p>
+              📍 Jl. Pramuka Rt 03 Rw 11 Munggang Bawah Kalibeber Mojotengah
+            </p>
 
             <p>📞 +62 812-4669-3401</p>
 

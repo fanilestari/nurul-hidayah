@@ -7,7 +7,6 @@ import Profile from "./components/Profile";
 import Programs from "./components/Programs";
 import Gallery from "./components/Gallery";
 import PPDB from "./components/PPDB";
-import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
 
@@ -26,7 +25,6 @@ function LandingPage() {
         <Programs />
         <Gallery />
         <PPDB />
-        <Contact />
       </div>
 
       <WhatsAppButton />
