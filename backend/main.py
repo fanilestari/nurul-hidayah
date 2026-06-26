@@ -2,6 +2,8 @@ from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
+from sqlalchemy import func
+from utils.telegram.py import send_telegram
 
 from database import SessionLocal, engine
 from models import PPDB
@@ -88,11 +90,25 @@ def create_ppdb(
         pesan=data.pesan
     )
 
-    db.add(siswa)
-    db.commit()
-    db.refresh(siswa)
+   db.add(siswa)
+   db.commit()
+   db.refresh(siswa)
 
-    return siswa
+message = f"""
+🎉 Pendaftar Baru PPDB
+
+👤 Nama : {siswa.nama}
+🎂 Umur : {siswa.umur}
+🏫 Asal : {siswa.asal}
+💬 Pesan : {siswa.pesan}
+"""
+
+try:
+    send_telegram(message)
+except Exception as e:
+    print("Gagal kirim Telegram:", e)
+
+return siswa
 
 
 # ======================
@@ -158,4 +174,17 @@ def delete_ppdb(
 
     return {
         "message": "deleted"
+    }
+
+@app.get("/dashboard/stats")
+def dashboard_stats(
+    db: Session = Depends(get_db)
+):
+    total_santri = db.query(PPDB).count()
+
+    return {
+        "total_santri": total_santri,
+        "pendaftar_baru": total_santri,
+        "pesan_masuk": 0,
+        "program_aktif": 0
     }
