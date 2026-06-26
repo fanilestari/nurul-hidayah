@@ -1,3 +1,5 @@
+from email.mime import message
+
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -90,25 +92,25 @@ def create_ppdb(
         pesan=data.pesan
     )
 
-   db.add(siswa)
-   db.commit()
-   db.refresh(siswa)
+    db.add(siswa)
+    db.commit()
+    db.refresh(siswa)
 
-message = f"""
-🎉 Pendaftar Baru PPDB
+    message = f"""
+    🎉 Pendaftar Baru PPDB
 
-👤 Nama : {siswa.nama}
-🎂 Umur : {siswa.umur}
-🏫 Asal : {siswa.asal}
-💬 Pesan : {siswa.pesan}
-"""
+    👤 Nama : {siswa.nama}
+    🎂 Umur : {siswa.umur}
+    🏫 Asal : {siswa.asal}
+    💬 Pesan : {siswa.pesan}
+    """
 
-try:
+    try:
     send_telegram(message)
-except Exception as e:
+    except Exception as e:
     print("Gagal kirim Telegram:", e)
 
-return siswa
+    return siswa
 
 
 # ======================
