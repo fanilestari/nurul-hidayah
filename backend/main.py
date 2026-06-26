@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from sqlalchemy import func
-from utils.telegram.py import send_telegram
+from utils.telegram import send_telegram
 
 from database import SessionLocal, engine
 from models import PPDB
